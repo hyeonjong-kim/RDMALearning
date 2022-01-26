@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/network/RDMA.hpp
+iostream
+-
+string
+-
+fstream
+-
+sstream
+-
+cstdlib
+-
+netdb.h
+-
+cstdlib
+-
+arpa/inet.h
+-
+assert.h
+-
+inttypes.h
+-
+typeinfo
+-
+cstdio
+-
+infiniband/verbs.h
+-
+
+/home/hjkim/Lets_go_RDMA/server/src/network/RDMA.cpp
+RDMA.hpp
+-
+
