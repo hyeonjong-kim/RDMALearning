@@ -113,8 +113,8 @@ int main(){
   rdma->changeQueuePairStateToRTR(qp, PORT, stoi(rdmaInfo.find("qp_num")->second), stoi(rdmaInfo.find("lid")->second));
   rdma->changeQueuePairStateToRTS(qp);
 
-  string s = "fuck u";
-  strcpy(send_buffer, s.c_str());
+  string sss = "fuck u";
+  strcpy(send_buffer, sss.c_str());
 
   rdma->post_rdma_write(qp, mr, send_buffer, sizeof(char)*1024, rdmaInfo.find("addr")->second, rdmaInfo.find("rkey")->second);
   rdma->pollCompletion(completion_queue);
