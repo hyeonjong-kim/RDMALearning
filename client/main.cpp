@@ -84,17 +84,17 @@ int main(){
   //Create user context -> Create protection domain -> Create completion queue -> Create queue pair -> Create buffer(Send/Recv) -> Exchange RDMA Information using TCP/IP-> Change qurer pair state 
   RDMA *rdma = new RDMA();
   
-  struct ibv_context* context = rdma->createContext(); //집짓고 주소지 등록
-  struct ibv_pd* protection_domain = ibv_alloc_pd(context); //법적 권리 획득
+  struct ibv_context* context = rdma->createContext();
+  struct ibv_pd* protection_domain = ibv_alloc_pd(context);
   int cq_size = 0x10;
-  struct ibv_cq* completion_queue = ibv_create_cq(context, cq_size, nullptr, nullptr, 0); //발송 및 수령 확인처 생성
-  struct ibv_qp* qp = rdma->createQueuePair(protection_domain, completion_queue); // 신상정보 등록
+  struct ibv_cq* completion_queue = ibv_create_cq(context, cq_size, nullptr, nullptr, 0);
+  struct ibv_qp* qp = rdma->createQueuePair(protection_domain, completion_queue);
   char send_buffer[1024];
-  struct ibv_mr *mr = rdma->registerMemoryRegion(protection_domain, send_buffer, sizeof(send_buffer)); // 발송 및 수령지 등록 및 고정
+  struct ibv_mr *mr = rdma->registerMemoryRegion(protection_domain, send_buffer, sizeof(send_buffer));
   
   uint16_t lid = rdma->getLocalId(context, PORT); // 내 주소지 뭡니까?
   uint32_t qp_num = rdma->getQueuePairNumber(qp); // 내 신상정보 뭡니까?
-
+  
   //Send RDMA info
   std::ostringstream oss;
   oss << &send_buffer;
@@ -113,7 +113,8 @@ int main(){
   rdma->changeQueuePairStateToRTR(qp, PORT, stoi(rdmaInfo.find("qp_num")->second), stoi(rdmaInfo.find("lid")->second));
   rdma->changeQueuePairStateToRTS(qp);
 
-  for(int i = 0; i < 1024; i++)send_buffer[i]='f';
+  string s = "fuck u";
+  strcpy(send_buffer, s.c_str());
 
   rdma->post_rdma_write(qp, mr, send_buffer, sizeof(char)*1024, rdmaInfo.find("addr")->second, rdmaInfo.find("rkey")->second);
   rdma->pollCompletion(completion_queue);

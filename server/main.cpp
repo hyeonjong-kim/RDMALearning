@@ -116,7 +116,7 @@ int main(){
   rdma.changeQueuePairStateToRTS(qp);
 
   sleep(10);
-  for(int i = 0; i < 1024; i++)cout << send_buffer[i] << endl;
+  for(int i = 0; i < 1024; i++)cout << send_buffer[i];
   
   ibv_destroy_qp(qp);
   ibv_destroy_cq(completion_queue);
